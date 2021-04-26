@@ -1,0 +1,51 @@
+version: '3.2'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+    - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+    - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+      - zookeeper
+    volumes:
+      - ./:/etc/kafka
+
+
+#command to enter the kafka docker container
+# 1. docker exec -it <container_id> /bin/sh
+# 2. cd opt
+# 3. cd kafka
+# 4. cd bin
+
+#  To add topic to kafka via command
+# kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic <topic name>
+
+# To check topic inside kafka
+# kafka-topics.sh --list --zookeeper zookeeper:2181
+
+# Read data in topic
+# kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic_name> --from-beginning
+
+##################################################
+
+#command to enter the mongo docker container
+
+# docker exec -it <container_id> bash
+
+# show databases
+
+# use kafka-service
+
+# show collections
