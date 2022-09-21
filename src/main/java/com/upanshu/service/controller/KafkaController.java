@@ -42,4 +42,5 @@ public class KafkaController {
         }
         return protagonistInformation.get();
     }
+
 }
